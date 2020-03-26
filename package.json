@@ -10,14 +10,21 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.helloWorld",
+		"onCommand:extension.showView"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"title": "Hello World",
+				"category": "My"
+			},
+			{
+				"command": "extension.showView",
+				"title": "Show view",
+				"category": "My"
 			}
 		]
 	},
