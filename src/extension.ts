@@ -18,13 +18,25 @@ export function activate(context: vscode.ExtensionContext) {
 				enableScripts: true
 			}
 		);
+		
+		const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'presentation', 'dist'));
 
-		const onDiskPath = vscode.Uri.file(
-			path.join(context.extensionPath, 'presentation', 'dist')
-		);
+		const resourceUri = panel.webview.asWebviewUri(onDiskPath);
+		panel.webview.html = getWebviewContent(resourceUri.toString());
 
-		const imgUrl = panel.webview.asWebviewUri(onDiskPath);
-		panel.webview.html = getWebviewContent(imgUrl.toString());
+		panel.webview.onDidReceiveMessage(
+			message => {
+			  switch (message.command) {
+				case 'alert':
+				  vscode.window.showErrorMessage(message.text);
+
+				  panel.webview.postMessage({ command: 'refactor' });
+				  return;
+			  }
+			},
+			undefined,
+			context.subscriptions
+		  );
 	});
 
 	context.subscriptions.push(disposable);

@@ -26,15 +26,24 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    <button v-on:click="click">Greet</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
+declare var acquireVsCodeApi: any;
+const vscode = acquireVsCodeApi();
+
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+
+  public click(): void {
+    console.log("HELLO");
+    vscode.postMessage({command: 'alert', text: '🐛  on line ' });
+  }
 }
 </script>
 
