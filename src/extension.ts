@@ -18,7 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 				enableScripts: true
 			}
 		);
-		
+
 		const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'presentation', 'dist'));
 
 		const resourceUri = panel.webview.asWebviewUri(onDiskPath);
@@ -26,17 +26,17 @@ export function activate(context: vscode.ExtensionContext) {
 
 		panel.webview.onDidReceiveMessage(
 			message => {
-			  switch (message.command) {
-				case 'alert':
-				  vscode.window.showErrorMessage(message.text);
+				switch (message.command) {
+					case 'alert':
+						vscode.window.showErrorMessage(message.text);
 
-				  panel.webview.postMessage({ command: 'refactor' });
-				  return;
-			  }
+						panel.webview.postMessage({ command: 'refactor' });
+						return;
+				}
 			},
 			undefined,
 			context.subscriptions
-		  );
+		);
 	});
 
 	context.subscriptions.push(disposable);
