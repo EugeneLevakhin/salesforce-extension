@@ -1,9 +1,21 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { CommandExecutor } from './services/commandExecutor';
+import { DebugLogsService } from './services/debugLogsService';
+import { DebugLogsServiceMock } from './mock/debugLogsServiceMock';
+import { IDebugLogsService } from './services/iDebugLogsService';
 
 export function activate(context: vscode.ExtensionContext) {
+	const extensionPath: string = context.extensionPath;
+	const workingDirectory: string = vscode.workspace.workspaceFolders![0].uri.fsPath;
 
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
+	const commandExecutor = new CommandExecutor(workingDirectory);
+	// const debugLogsService: IDebugLogsService = new DebugLogsService(commandExecutor);
+	const debugLogsService: IDebugLogsService = new DebugLogsServiceMock();
+
+	let disposable = vscode.commands.registerCommand('extension.helloWorld', async () => {
+		const logs = await debugLogsService.getLogs();
+
 		vscode.window.showInformationMessage('Hello World!');
 	});
 
@@ -19,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		);
 
-		const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, 'presentation', 'dist'));
+		const onDiskPath = vscode.Uri.file(path.join(extensionPath, 'presentation', 'dist'));
 
 		const resourceUri = panel.webview.asWebviewUri(onDiskPath);
 		panel.webview.html = getWebviewContent(resourceUri.toString());
