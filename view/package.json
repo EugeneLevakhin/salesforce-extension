@@ -1,8 +1,9 @@
 {
-	"name": "presentation",
+	"name": "view",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"modules-install": "npm install",
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build"
 	},

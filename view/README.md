@@ -1,4 +1,4 @@
-# presentation
+# view
 
 ## Project setup
 ```
