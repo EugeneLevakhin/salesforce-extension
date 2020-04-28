@@ -1,5 +1,19 @@
 # salesforce-extension README
 
+-----------------------------------------------------------------------------------------------------------
+TODO:
+refactoring webview
+setContext:
+  vscode.commands.executeCommand(
+    'setContext',
+    'sfdx:project_opened',
+    sfdxProjectOpened
+  );
+  
+when: regular expression on view item
+
+-----------------------------------------------------------------------------------------------------------
+
 This is the README for your extension "salesforce-extension". After writing up a brief description, we recommend including the following sections.
 
 ## Features
