@@ -1,6 +1,6 @@
-# my-vscode-extension README
+# salesforce-extension README
 
-This is the README for your extension "my-vscode-extension". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "salesforce-extension". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 

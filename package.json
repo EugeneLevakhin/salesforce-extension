@@ -1,7 +1,7 @@
 {
-	"name": "my-vscode-extension",
-	"displayName": "My VSCode Extension",
-	"description": "some description",
+	"name": "salesforce-extension",
+	"displayName": "Salesforce VS Code Extension",
+	"description": "Test salesforce VS Code extension",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.43.0"
@@ -10,21 +10,20 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld",
-		"onCommand:extension.showView"
+		"workspaceContains:sfdx-project.json"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World",
-				"category": "My"
+				"command": "sfext.runAllApexTests",
+				"title": "Run All Apex Tests",
+				"category": "SFEXT"
 			},
 			{
-				"command": "extension.showView",
-				"title": "Show view",
-				"category": "My"
+				"command": "sfext.showDebugLogs",
+				"title": "Show Debug Logs",
+				"category": "SFEXT"
 			}
 		]
 	},
