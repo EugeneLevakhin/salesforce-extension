@@ -25,7 +25,19 @@
 				"title": "Show Debug Logs",
 				"category": "SFEXT"
 			}
-		]
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "sfext.runAllApexTests",
+					"when": "SFEXT_active"
+				},
+				{
+					"command": "sfext.showDebugLogs",
+					"when": "SFEXT_active"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"modules-install": "npm install",

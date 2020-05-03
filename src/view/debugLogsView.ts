@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { DebugLog } from '../models/debugLog';
 
 export class DebugLogsView {
 	private panel: vscode.WebviewPanel | undefined;
@@ -13,34 +14,25 @@ export class DebugLogsView {
 			'Apex Debug Logs',
 			vscode.ViewColumn.One,
 			{
-				enableScripts: true
+				enableScripts: true,
+				retainContextWhenHidden: true
 			}
 		);
 
-		const onDiskPath: vscode.Uri = vscode.Uri.file(path.join(this.extensionPath, 'view', 'dist'));
-		const resourceUri: vscode.Uri = this.panel.webview.asWebviewUri(onDiskPath);
+		const physicalPath: vscode.Uri = vscode.Uri.file(path.join(this.extensionPath, 'view', 'dist'));
+		const resourceUri: vscode.Uri = this.panel.webview.asWebviewUri(physicalPath);
 		this.panel.webview.html = this.getWebviewContent(resourceUri.toString());
 
-		this.panel.webview.onDidReceiveMessage(this.messageListenerFromView,
-			undefined,
-			this.disposableObjects
-		);
+		this.panel.webview.onDidReceiveMessage(this.messageListenerFromView, undefined, this.disposableObjects);
 	}
 
-	// TODO: check need arrow function
-	private messageListenerFromView(message: any) {
-		switch (message.command) {
-			case 'alert':
-				vscode.window.showErrorMessage(message.text);
-
-				this.sendMessageToView({ command: 'refactor' });
-				return;
-		}
+	private messageListenerFromView = (log: DebugLog): void => {
+		vscode.window.showErrorMessage(log.Id);
 	}
 
-	private sendMessageToView(message: any) {
+	public sendMessageToView(debugLogs: DebugLog[]) {
 		if (this.panel) {
-			this.panel.webview.postMessage({ command: 'refactor' });
+			this.panel.webview.postMessage(debugLogs);
 		}
 	}
 

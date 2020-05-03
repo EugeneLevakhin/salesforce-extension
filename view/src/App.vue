@@ -1,20 +1,70 @@
 <template>
 	<div id="app">
-		<img alt="Vue logo" src="./assets/logo.png">
-		<HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+		<DebugLogsView v-bind:logs="logs" v-on:log-clicked="onLogClicked" />
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import DebugLogsView from './components/DebugLogsView.vue';
+import { DebugLog } from '../../src/models/debugLog';
+import MockDebugLogs from '../../src/mocks/logs.json';
+import { getEnvironment, Environment } from './utils';
 
 @Component({
 	components: {
-		HelloWorld,
+		DebugLogsView,
 	},
 })
-export default class App extends Vue {}
+
+export default class App extends Vue {
+	private vscode: any;
+	private receivedLogs: DebugLog[] = [];
+	private ennvironment: Environment;
+
+	constructor() {
+		super();
+
+		this.ennvironment = getEnvironment();
+	}
+
+	get logs(): DebugLog[] {
+		if (this.ennvironment === Environment.Production) {
+			return this.receivedLogs;
+		} else {
+			return  MockDebugLogs.result;
+		}
+	}
+
+	created() {
+		if (this.ennvironment === Environment.Production) {
+			// @ts-ignore
+			window.addEventListener('message', this.messageListenerFromExtension);
+			// @ts-ignore
+			this.vscode = acquireVsCodeApi();
+		}
+	}
+
+	destroyed() {
+		if (this.ennvironment === Environment.Production) {
+			// @ts-ignore
+			window.removeEventListener('message', this.messageListenerFromExtension);
+		}
+	}
+
+	private messageListenerFromExtension(event: any) {
+		this.receivedLogs = event.data;
+	}
+
+	private onLogClicked(log: DebugLog): void {
+		if (this.ennvironment === Environment.Production) {
+			this.vscode.postMessage(log);
+		} else if (this.ennvironment === Environment.Development) {
+			console.log('log clicked', log.Id);
+		}
+	}
+}
+
 </script>
 
 <style>
@@ -24,6 +74,6 @@ export default class App extends Vue {}
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
-	margin-top: 60px;
+	margin-top: 8px;
 }
 </style>

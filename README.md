@@ -4,16 +4,19 @@
 TODO:
 
 refactoring webview
-setContext:
-  vscode.commands.executeCommand(
-    'setContext',
-    'sfdx:project_opened',
-    sfdxProjectOpened
-  );
-  
+styling
+singleton webview
 api requests
 virtual document code uderlining
-treeview: getChildren: Promise, when: regular expression on view item
+treeview: getChildren: Promise,
+when: regular expression on view item
+treeview item click event
+focus on tree view
+input box
+output channel
+settings
+git diff
+save workspace data (key, value)
 
 tests
 

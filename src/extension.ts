@@ -23,6 +23,8 @@ export function activate(context: vscode.ExtensionContext) {
 	];
 
 	registerCommands(context, commands);
+
+	vscode.commands.executeCommand('setContext', 'SFEXT_active', true);
 }
 
 export function registerCommands(context: vscode.ExtensionContext, commands: BaseCommand[]) {
