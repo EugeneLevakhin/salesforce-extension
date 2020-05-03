@@ -1,7 +1,7 @@
 <template>
 	<tr>
 		<td>
-			<a href="#" v-on:click="logClicked">{{ log.Id }}</a>
+			<button class="as-link-button" v-on:click="logClicked">{{log.Id}}</button>
 		</td>
 		<td>{{ log.StartTime }}</td>
 		<td>{{ log.Status }}</td>
@@ -36,5 +36,16 @@ export default class DebugLogView extends Vue {
 </script>
 
 <style scoped>
+.as-link-button {
+	background: transparent;
+  	border: none;
+  	color: #069;
+  	text-decoration: underline;
+  	cursor: pointer;
+}
 
+/* disable button focused border */
+.as-link-button:focus { 
+	outline:0; 
+}
 </style>
