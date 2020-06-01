@@ -54,10 +54,10 @@ th {
 
 th, td {
 	border: 3px solid #646d72;
-	height: 25px;
+	height: 20px;
 	text-align: left;
   	vertical-align: middle;
-  	padding: 15px;
+  	padding: 10px;
 }
 
 tr:nth-child(even) { background-color: #4e4564; }

@@ -1,7 +1,7 @@
 <template>
 	<tr>
 		<td>
-			<button class="as-link-button" v-on:click="logClicked">{{log.Id}}</button>
+			<button class="as-link-button" v-on:click="logClicked">{{ log.Id }}</button>
 		</td>
 		<td>{{ log.StartTime }}</td>
 		<td>{{ log.Status }}</td>

@@ -14,8 +14,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const commandExecutor = new CommandExecutor(workingDirectory);
 	const apexTestRunner = new ApexTestRunner(commandExecutor);
-	// const debugLogsService: IDebugLogsService = new DebugLogsService(commandExecutor);
-	const debugLogsService: IDebugLogsService = new DebugLogsServiceMock();
+	const debugLogsService: IDebugLogsService = new DebugLogsService(commandExecutor);
+	// const debugLogsService: IDebugLogsService = new DebugLogsServiceMock();
 
 	const commands: BaseCommand[] = [
 		new ApexTestRunCommand(apexTestRunner),
