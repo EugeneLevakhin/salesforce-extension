@@ -1,9 +1,13 @@
 <template>
 	<div id="app">
 		<!-- <button @click="showModal = true">Show modal</button> -->
+		<!-- <button v-on:click="onShowLoading">Show loading</button> -->
 		<ModalDialog v-if="showModal" @close="showModal = false">
 			<h3 slot="header">custom header</h3>
 		</ModalDialog>
+
+		<LoadingDialog v-if="showLoading" />
+
 		<DebugLogsView v-bind:logs="logs" v-on:log-clicked="onLogClicked" />
 	</div>
 </template>
@@ -12,6 +16,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import DebugLogsView from './components/DebugLogsView.vue';
 import ModalDialog from './components/ModalDialog.vue';
+import LoadingDialog from './components/LoadingDialog.vue';
 import { DebugLog } from '../../src/models/debugLog';
 import MockDebugLogs from '../../src/mocks/logs.json';
 import { getEnvironment, Environment } from './utils';
@@ -19,7 +24,8 @@ import { getEnvironment, Environment } from './utils';
 @Component({
 	components: {
 		DebugLogsView,
-		ModalDialog
+		ModalDialog,
+		LoadingDialog
 	},
 })
 
@@ -28,6 +34,7 @@ export default class App extends Vue {
 	private receivedLogs: DebugLog[] = [];
 	private ennvironment: Environment;
 	private showModal: boolean = false;
+	private showLoading: boolean = false;
 
 	constructor() {
 		super();
@@ -69,6 +76,14 @@ export default class App extends Vue {
 		} else if (this.ennvironment === Environment.Development) {
 			console.log('log clicked', log.Id);
 		}
+	}
+
+	private onShowLoading(): void {
+		this.showLoading = true;
+
+		setTimeout(() => {
+			this.showLoading = false;
+		}, 2000);
 	}
 }
 
