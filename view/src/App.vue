@@ -1,5 +1,9 @@
 <template>
 	<div id="app">
+		<!-- <button @click="showModal = true">Show modal</button> -->
+		<ModalDialog v-if="showModal" @close="showModal = false">
+			<h3 slot="header">custom header</h3>
+		</ModalDialog>
 		<DebugLogsView v-bind:logs="logs" v-on:log-clicked="onLogClicked" />
 	</div>
 </template>
@@ -7,6 +11,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import DebugLogsView from './components/DebugLogsView.vue';
+import ModalDialog from './components/ModalDialog.vue';
 import { DebugLog } from '../../src/models/debugLog';
 import MockDebugLogs from '../../src/mocks/logs.json';
 import { getEnvironment, Environment } from './utils';
@@ -14,6 +19,7 @@ import { getEnvironment, Environment } from './utils';
 @Component({
 	components: {
 		DebugLogsView,
+		ModalDialog
 	},
 })
 
@@ -21,6 +27,7 @@ export default class App extends Vue {
 	private vscode: any;
 	private receivedLogs: DebugLog[] = [];
 	private ennvironment: Environment;
+	private showModal: boolean = false;
 
 	constructor() {
 		super();
